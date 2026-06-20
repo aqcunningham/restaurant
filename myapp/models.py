@@ -1,0 +1,34 @@
+from django.db import models
+
+# a table/model for user comment
+class UserComments(models.Model):
+	first_name = models.CharField(max_length = 200)
+	last_name = models.CharField(max_length = 200)
+	comment = models.CharField(max_length = 1000)
+    	# __str__ method is just about how the object displays itself when printed or shown in Django admin
+
+	def __str__(self): 
+          return self.first_name
+
+
+# a table for Menu
+class Menu(models.Model):
+    item_name = models.CharField(max_length = 200)
+    category = models.CharField(max_length = 200)
+    description = models.CharField(max_length = 1000)
+    def __str__(self):     
+        return self.item_name
+
+    
+# a table for Bookings, from the last lab
+class Booking(models.Model):
+    first_name = models.CharField(max_length=200)
+    reservation_date = models.DateField()
+    # its for the time:
+    reservation_slot = models.SmallIntegerField(default=10)
+    number_of_guests = models.IntegerField(default=2)
+    occasion = models.CharField(max_length=200, blank=True)
+    def __str__(self): 
+        return self.first_name
+
+    
