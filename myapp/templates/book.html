@@ -129,7 +129,13 @@ document.getElementById('button').addEventListener('click', function (e) {
       reservation_slot: document.getElementById('reservation_slot').value,
     }
 
-    fetch("{% url 'all_bookings' %}", { method: 'post', body: JSON.stringify(formdata) })
+    fetch("{% url 'bookings' %}", { 
+      method: 'post', 
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': document.cookie.split('csrftoken=')[1]?.split(';')[0]
+      },
+      body: JSON.stringify(formdata) })
       .then(r => r.text())
       .then(data => {
         getBookings()

@@ -6,6 +6,7 @@ from datetime import datetime
 from django.core import serializers
 import json
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 
@@ -53,6 +54,7 @@ def book(request):
 			return JsonResponse({'message': 'success'})
 	return render(request, 'book.html', {'form': form})
 
+# @login_required
 @csrf_exempt	
 def bookings(request):
 	# this version from prev lab:
@@ -86,9 +88,11 @@ def bookings(request):
 	return HttpResponse(booking_json, content_type='application/json') 
 
 def all_bookings(request):
-	date = request.GET.get('date', datetime.today().date())
-	if date == '':
-		date = datetime.today().date()
-	bookings = Booking.objects.all().filter(reservation_date=date)
+	# to show the bookings just for today:
+	# date = request.GET.get('date', datetime.today().date())
+	# if date == '':
+	# 	date = datetime.today().date()
+	# bookings = Booking.objects.all().filter(reservation_date=date)
+	bookings = Booking.objects.all()
 	booking_json = serializers.serialize('json', bookings)
 	return render(request, 'bookings.html', {'bookings': booking_json})
